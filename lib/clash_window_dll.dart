@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 typedef _Listen = Future Function(MethodCall call);
 
 class ClashWindowDll {
-  static MethodChannel _channel = MethodChannel('clash_window_dll')
+  static final MethodChannel _channel = const MethodChannel('clash_window_dll')
     ..setMethodCallHandler(_listen);
 
   static setListen(_Listen? listen) {
@@ -19,14 +19,12 @@ class ClashWindowDll {
     _getHide = hide;
   }
 
-  static var _hide = true;
   static Future _listen(MethodCall call) async {
-    print('.............${call.method}');
     if (call.method == 'getHideOnClose') {
       if (_getHide != null) {
         return _getHide!(call);
       }
-      return _hide;
+      return true;
     }
     if (call.method == 'showWindow') {
       onShowWindow?.call();
